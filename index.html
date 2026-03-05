@@ -1,0 +1,670 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>iai.autos — AI Car Finder | Find Your Perfect Car</title>
+  <meta name="description" content="Tell the AI what you need. Get your perfect car recommendation instantly. Free AI-powered car finder tool — browse all makes, read auto news, and find your match." />
+  <meta name="keywords" content="AI car finder, car recommendation, best car 2026, buy a car, car quiz, car picker, vehicle selector" />
+  <link rel="canonical" href="https://iai.autos/" />
+  <meta property="og:title" content="iai.autos — AI Car Finder" />
+  <meta property="og:description" content="Tell the AI what you need. Get your perfect car." />
+  <meta property="og:url" content="https://iai.autos/" />
+  <meta property="og:type" content="website" />
+  <meta name="twitter:card" content="summary_large_image" />
+  <meta name="twitter:title" content="iai.autos — AI Car Finder" />
+  <meta name="twitter:description" content="Answer 3 questions. The AI finds your match." />
+  <style>
+    :root {
+      --bg: #0a0a0f; --card: #1a1a2e; --card2: #12121a;
+      --accent: #58a6ff; --accent2: #bf5af2;
+      --purple: #bf5af2; --text: #f0f0f0;
+      --muted: #a0a0b8; --border: #2a2a3e; --radius: 12px;
+    }
+
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* NAV */
+    nav {
+      background: var(--card);
+      border-bottom: 1px solid var(--border);
+      padding: 0 24px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      height: 60px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .nav-logo {
+      font-size: 1.25rem;
+      font-weight: 800;
+      color: var(--accent);
+      text-decoration: none;
+      letter-spacing: -0.5px;
+    }
+    .nav-tagline {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-left: 10px;
+      display: none;
+    }
+    @media (min-width: 600px) { .nav-tagline { display: inline; } }
+    .nav-right { display: flex; align-items: center; gap: 10px; }
+    .btn-tip {
+      background: transparent;
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 6px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      font-size: 0.8rem;
+      transition: all .2s;
+    }
+    .btn-tip:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* LAYOUT */
+    .container { max-width: 960px; margin: 0 auto; padding: 0 20px; }
+    section { padding: 48px 0; }
+
+    /* HERO */
+    .hero {
+      text-align: center;
+      padding: 72px 20px 48px;
+      background: radial-gradient(ellipse at 50% 0%, rgba(88,166,255,0.12) 0%, transparent 70%);
+    }
+    .hero h1 {
+      font-size: clamp(2rem, 5vw, 3.4rem);
+      font-weight: 900;
+      color: var(--text);
+      line-height: 1.15;
+      margin-bottom: 16px;
+    }
+    .hero h1 span { color: var(--accent); }
+    .hero p {
+      font-size: clamp(1rem, 2.5vw, 1.2rem);
+      color: var(--muted);
+      max-width: 540px;
+      margin: 0 auto 32px;
+    }
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: rgba(88,166,255,0.12);
+      border: 1px solid rgba(88,166,255,0.3);
+      border-radius: 20px;
+      padding: 4px 14px;
+      font-size: 0.78rem;
+      color: var(--accent);
+      margin-bottom: 24px;
+    }
+
+    /* SECTION HEADERS */
+    .section-title {
+      font-size: 1.4rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 8px;
+    }
+    .section-sub {
+      font-size: 0.9rem;
+      color: var(--muted);
+      margin-bottom: 24px;
+    }
+
+    /* QUIZ */
+    .quiz-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      margin-bottom: 16px;
+    }
+    .quiz-step-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      color: var(--accent);
+      margin-bottom: 8px;
+    }
+    .quiz-question {
+      font-size: 1.1rem;
+      font-weight: 700;
+      color: var(--text);
+      margin-bottom: 16px;
+    }
+    .quiz-btn-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+    .quiz-btn {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      color: var(--muted);
+      padding: 10px 18px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 600;
+      transition: all .2s;
+    }
+    .quiz-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    .quiz-btn.active {
+      background: rgba(88,166,255,0.15);
+      border-color: var(--accent);
+      color: var(--accent);
+    }
+    #quiz-result {
+      display: none;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+    }
+
+    /* MAKES */
+    .makes-search {
+      width: 100%;
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 12px 16px;
+      font-size: 0.95rem;
+      color: var(--text);
+      margin-bottom: 16px;
+      outline: none;
+      transition: border-color .2s;
+    }
+    .makes-search:focus { border-color: var(--accent); }
+    .makes-search::placeholder { color: var(--muted); }
+    #makes-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      max-height: 280px;
+      overflow-y: auto;
+      padding-right: 4px;
+    }
+    #makes-grid::-webkit-scrollbar { width: 4px; }
+    #makes-grid::-webkit-scrollbar-track { background: var(--card2); border-radius: 2px; }
+    #makes-grid::-webkit-scrollbar-thumb { background: var(--border); border-radius: 2px; }
+
+    /* NEWS */
+    #auto-news a { color: var(--text); transition: color .2s; }
+    #auto-news a:hover { color: var(--accent); text-decoration: none; }
+
+    /* AFFILIATE */
+    .aff-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 16px;
+    }
+    .aff-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      transition: border-color .2s, transform .2s;
+    }
+    .aff-card:hover { border-color: var(--accent); transform: translateY(-2px); }
+    .aff-card-title { font-weight: 800; font-size: 1rem; color: var(--text); }
+    .aff-card-desc { font-size: 0.85rem; color: var(--muted); flex: 1; }
+    .aff-btn {
+      display: inline-block;
+      text-align: center;
+      padding: 10px 20px;
+      border-radius: 8px;
+      font-weight: 700;
+      font-size: 0.85rem;
+      cursor: pointer;
+      text-decoration: none;
+      transition: opacity .2s;
+    }
+    .aff-btn:hover { opacity: 0.85; text-decoration: none; }
+    .aff-amazon { background: #ff9900; color: #000; }
+    .aff-coinbase { background: #0052ff; color: #fff; }
+
+    /* EMPIRE GRID */
+    .empire-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .empire-link {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      padding: 6px 12px;
+      font-size: 0.78rem;
+      color: var(--muted);
+      text-decoration: none;
+      transition: all .2s;
+    }
+    .empire-link:hover { border-color: var(--accent); color: var(--accent); text-decoration: none; }
+    .empire-link.current { border-color: var(--accent); color: var(--accent); }
+
+    /* FOOTER */
+    footer {
+      background: var(--card);
+      border-top: 1px solid var(--border);
+      padding: 28px 24px;
+      text-align: center;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+    footer a { color: var(--muted); }
+    footer a:hover { color: var(--accent); }
+
+    /* DIVIDER */
+    .divider {
+      border: none;
+      border-top: 1px solid var(--border);
+      margin: 0;
+    }
+
+    /* VTR PULSE */
+    @keyframes vtrPulse {
+      0%, 100% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.4; transform: scale(0.8); }
+    }
+
+    /* RESPONSIVE */
+    @media (max-width: 600px) {
+      .quiz-card { padding: 20px; }
+      section { padding: 32px 0; }
+      .hero { padding: 48px 20px 32px; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div style="display:flex;align-items:center;">
+    <a href="/" class="nav-logo">🚗 iai.autos</a>
+    <span class="nav-tagline">— Tell the AI what you need. Get your perfect car.</span>
+  </div>
+  <div class="nav-right">
+    <button class="btn-tip" onclick="openTip()">🧡 Tip</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-badge">
+    <span style="width:7px;height:7px;border-radius:50%;background:var(--accent);display:inline-block;"></span>
+    Free AI-Powered Car Finder
+  </div>
+  <h1>What Car Should <span>You Buy?</span></h1>
+  <p>Answer 3 questions. The AI finds your match.</p>
+</div>
+
+<div class="container">
+
+  <!-- QUIZ -->
+  <section>
+    <div class="section-title">🤖 AI Car Finder Quiz</div>
+    <div class="section-sub">Select one option per step — your result appears automatically.</div>
+
+    <!-- Step 1: Budget -->
+    <div class="quiz-card" id="step-budget">
+      <div class="quiz-step-label">Step 1 of 3</div>
+      <div class="quiz-question">What's your budget?</div>
+      <div class="quiz-btn-row">
+        <button class="quiz-btn" onclick="selectOption('budget','under20k',this)">Under $20k</button>
+        <button class="quiz-btn" onclick="selectOption('budget','20-40k',this)">$20–40k</button>
+        <button class="quiz-btn" onclick="selectOption('budget','40-60k',this)">$40–60k</button>
+        <button class="quiz-btn" onclick="selectOption('budget','60k-plus',this)">$60k+</button>
+      </div>
+    </div>
+
+    <!-- Step 2: Lifestyle -->
+    <div class="quiz-card" id="step-lifestyle">
+      <div class="quiz-step-label">Step 2 of 3</div>
+      <div class="quiz-question">How do you drive?</div>
+      <div class="quiz-btn-row">
+        <button class="quiz-btn" onclick="selectOption('lifestyle','city',this)">City Commuter</button>
+        <button class="quiz-btn" onclick="selectOption('lifestyle','family',this)">Family</button>
+        <button class="quiz-btn" onclick="selectOption('lifestyle','adventure',this)">Adventure / Offroad</button>
+        <button class="quiz-btn" onclick="selectOption('lifestyle','performance',this)">Performance</button>
+      </div>
+    </div>
+
+    <!-- Step 3: Type -->
+    <div class="quiz-card" id="step-type">
+      <div class="quiz-step-label">Step 3 of 3</div>
+      <div class="quiz-question">What type of vehicle?</div>
+      <div class="quiz-btn-row">
+        <button class="quiz-btn" onclick="selectOption('type','sedan',this)">Sedan</button>
+        <button class="quiz-btn" onclick="selectOption('type','suv',this)">SUV / Crossover</button>
+        <button class="quiz-btn" onclick="selectOption('type','truck',this)">Truck</button>
+        <button class="quiz-btn" onclick="selectOption('type','electric',this)">Electric</button>
+      </div>
+    </div>
+
+    <!-- Result -->
+    <div id="quiz-result"></div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- CAR MAKES BROWSER -->
+  <section>
+    <div class="section-title">🔎 Browse All Car Makes</div>
+    <div class="section-sub">Live data from the NHTSA Vehicle API — <span id="makes-count" style="color:var(--accent);"></span></div>
+    <input
+      type="text"
+      id="make-search"
+      class="makes-search"
+      placeholder="Search makes... (e.g. Toyota, Ford, BMW)"
+      oninput="filterMakes()"
+    />
+    <div id="makes-grid">
+      <p style="color:var(--muted);font-size:0.85rem;">Loading makes from NHTSA API...</p>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- AUTO NEWS -->
+  <section>
+    <div class="section-title">📰 Auto Industry News</div>
+    <div class="section-sub">Live from Hacker News — updated every 10 seconds</div>
+    <div
+      id="auto-news"
+      style="background:var(--card);border:1px solid var(--border);border-radius:var(--radius);padding:20px;"
+    >
+      <p style="color:var(--muted);font-size:0.85rem;">Loading auto news...</p>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- AFFILIATES -->
+  <section>
+    <div class="section-title">🛒 Gear Up For Your Ride</div>
+    <div class="section-sub">Accessories, crypto rewards, and hardware wallets for car owners.</div>
+    <div class="aff-grid">
+      <div class="aff-card">
+        <div style="font-size:1.8rem;">🛻</div>
+        <div class="aff-card-title">Amazon Car Accessories</div>
+        <div class="aff-card-desc">Floor mats, dash cams, chargers, seat covers, and thousands more. Free shipping on Prime.</div>
+        <a href="https://www.amazon.com/s?k=car+accessories&tag=spunk01-20" target="_blank" rel="noopener" class="aff-btn aff-amazon">Shop on Amazon →</a>
+      </div>
+      <div class="aff-card">
+        <div style="font-size:1.8rem;">💰</div>
+        <div class="aff-card-title">Coinbase</div>
+        <div class="aff-card-desc">Buy, sell, and earn crypto. The most trusted crypto exchange with an easy mobile app.</div>
+        <a href="https://coinbase.com/join/YAGES3X?src=referral-link" target="_blank" rel="noopener" class="aff-btn aff-coinbase">Join Coinbase →</a>
+      </div>
+      <div class="aff-card">
+        <div style="font-size:1.8rem;">🔐</div>
+        <div class="aff-card-title">Ledger Hardware Wallet</div>
+        <div class="aff-card-desc">Keep your crypto safe offline. The #1 hardware wallet trusted by millions worldwide.</div>
+        <a href="https://shop.ledger.com/?r=0553c9ea1441" target="_blank" rel="noopener" class="aff-btn" style="background:var(--card2);border:1px solid var(--border);color:var(--text);">Get Ledger →</a>
+      </div>
+    </div>
+  </section>
+
+  <hr class="divider" />
+
+  <!-- EMPIRE GRID -->
+  <section>
+    <div class="section-title">🌐 Explore the Network</div>
+    <div class="section-sub">More free AI tools and prediction markets from the same team.</div>
+    <div class="empire-grid">
+      <a href="https://spunk.bet" target="_blank" rel="noopener" class="empire-link">spunk.bet</a>
+      <a href="https://pfp.best" target="_blank" rel="noopener" class="empire-link">pfp.best</a>
+      <a href="https://spunkart.com" target="_blank" rel="noopener" class="empire-link">spunkart.com</a>
+      <a href="https://13.money" target="_blank" rel="noopener" class="empire-link">13.money</a>
+      <a href="https://13.markets" target="_blank" rel="noopener" class="empire-link">13.markets</a>
+      <a href="https://13.golf" target="_blank" rel="noopener" class="empire-link">13.golf</a>
+      <a href="https://13.energy" target="_blank" rel="noopener" class="empire-link">13.energy</a>
+      <a href="https://13.dance" target="_blank" rel="noopener" class="empire-link">13.dance</a>
+      <a href="https://free.institute" target="_blank" rel="noopener" class="empire-link">free.institute</a>
+      <a href="https://free.gripe" target="_blank" rel="noopener" class="empire-link">free.gripe</a>
+      <a href="https://chicago.coach" target="_blank" rel="noopener" class="empire-link">chicago.coach</a>
+      <a href="https://predict.horse" target="_blank" rel="noopener" class="empire-link">predict.horse</a>
+      <a href="https://predict.pics" target="_blank" rel="noopener" class="empire-link">predict.pics</a>
+      <a href="https://predict.mom" target="_blank" rel="noopener" class="empire-link">predict.mom</a>
+      <a href="https://predict.codes" target="_blank" rel="noopener" class="empire-link">predict.codes</a>
+      <a href="https://predict.boats" target="_blank" rel="noopener" class="empire-link">predict.boats</a>
+      <a href="https://predict.yachts" target="_blank" rel="noopener" class="empire-link">predict.yachts</a>
+      <a href="https://alien.best" target="_blank" rel="noopener" class="empire-link">alien.best</a>
+      <a href="https://plush.best" target="_blank" rel="noopener" class="empire-link">plush.best</a>
+      <a href="https://plush.surf" target="_blank" rel="noopener" class="empire-link">plush.surf</a>
+      <a href="https://clown.best" target="_blank" rel="noopener" class="empire-link">clown.best</a>
+      <a href="https://clown.surf" target="_blank" rel="noopener" class="empire-link">clown.surf</a>
+      <a href="https://clown.cam" target="_blank" rel="noopener" class="empire-link">clown.cam</a>
+      <a href="https://clown.sbs" target="_blank" rel="noopener" class="empire-link">clown.sbs</a>
+      <a href="https://iai.autos" target="_blank" rel="noopener" class="empire-link current">iai.autos</a>
+      <a href="https://iai.boats" target="_blank" rel="noopener" class="empire-link">iai.boats</a>
+      <a href="https://i13.best" target="_blank" rel="noopener" class="empire-link">i13.best</a>
+      <a href="https://i13.buzz" target="_blank" rel="noopener" class="empire-link">i13.buzz</a>
+      <a href="https://i13.autos" target="_blank" rel="noopener" class="empire-link">i13.autos</a>
+      <a href="https://i13.lat" target="_blank" rel="noopener" class="empire-link">i13.lat</a>
+      <a href="https://i13.pics" target="_blank" rel="noopener" class="empire-link">i13.pics</a>
+      <a href="https://i13.space" target="_blank" rel="noopener" class="empire-link">i13.space</a>
+      <a href="https://ai13.fun" target="_blank" rel="noopener" class="empire-link">ai13.fun</a>
+      <a href="https://ai13.store" target="_blank" rel="noopener" class="empire-link">ai13.store</a>
+    </div>
+  </section>
+
+</div><!-- /container -->
+
+<!-- FOOTER -->
+<footer>
+  <div style="margin-bottom:8px;">
+    <strong style="color:var(--text);">iai.autos</strong> — AI Car Finder &nbsp;|&nbsp;
+    <a href="https://twitter.com/SpunkArt13" target="_blank" rel="noopener">@SpunkArt13</a> &nbsp;|&nbsp;
+    <span>Built by SPUNK LLC</span> &nbsp;|&nbsp;
+    <button onclick="openTip()" style="background:none;border:none;color:var(--muted);cursor:pointer;font-size:0.8rem;">🧡 Tip</button>
+  </div>
+  <div style="font-size:0.75rem;">
+    Car data via <a href="https://vpic.nhtsa.dot.gov/api/" target="_blank" rel="noopener">NHTSA Vehicle API</a> &nbsp;·&nbsp;
+    News via <a href="https://news.ycombinator.com" target="_blank" rel="noopener">Hacker News</a> &nbsp;·&nbsp;
+    Free to use, always.
+  </div>
+</footer>
+
+<!-- TIP MODAL -->
+<div id="tip-modal" onclick="if(event.target===this)closeTip()" style="display:none;position:fixed;top:0;left:0;width:100%;height:100%;background:rgba(0,0,0,0.85);align-items:center;justify-content:center;z-index:10000;">
+  <div style="background:#1a1a2e;border:1px solid #2a2a3e;border-radius:16px;padding:32px;max-width:420px;width:90%;text-align:center;">
+    <h3 style="color:#f0f0f0;margin-bottom:8px;">🧡 Tip Spunk</h3>
+    <p style="color:#a0a0b8;font-size:0.9rem;margin-bottom:20px;">Built by one person with AI. Every tip keeps these sites free. 🧡</p>
+    <div id="tip-addr" onclick="copyTip()" style="background:#0a0a0f;border:1px solid #2a2a3e;border-radius:8px;padding:12px;font-family:monospace;font-size:0.75rem;color:#00f5d4;word-break:break-all;cursor:pointer;margin-bottom:8px;">bc1pkepg42ctsvsxk499qu02qqyyz88gwjchnjpsu22wmng9rhpfv3jqw2t2hm</div>
+    <p style="color:#a0a0b8;font-size:0.8rem;margin-bottom:16px;">Click to copy • Bitcoin (BTC)</p>
+    <button onclick="closeTip()" style="background:#2a2a3e;color:#f0f0f0;border:none;padding:10px 24px;border-radius:8px;cursor:pointer;">Close</button>
+  </div>
+</div>
+<script>
+function openTip(){var m=document.getElementById('tip-modal');if(m){m.style.display='flex';}}
+function closeTip(){var m=document.getElementById('tip-modal');if(m){m.style.display='none';}}
+function copyTip(){navigator.clipboard.writeText('bc1pkepg42ctsvsxk499qu02qqyyz88gwjchnjpsu22wmng9rhpfv3jqw2t2hm').then(function(){var el=document.getElementById('tip-addr');if(el){var o=el.textContent;el.textContent='✓ Copied!';setTimeout(function(){el.textContent=o;},2000);}}).catch(function(){});}
+document.addEventListener('keydown',function(e){if(e.key==='Escape')closeTip();});
+</script>
+
+<!-- VTR BADGE -->
+<div style="position:fixed;bottom:12px;right:12px;background:#1a1a2e;border:1px solid #2a2a3e;border-radius:20px;padding:6px 14px;font-size:12px;color:#a0a0b8;z-index:9999;display:flex;align-items:center;gap:6px;" id="vtr-badge">
+  <span style="width:7px;height:7px;border-radius:50%;background:#58a6ff;animation:vtrPulse 2s infinite;display:inline-block;"></span>
+  <span id="vtr-count">...</span>
+</div>
+<script>
+(function(){
+  if(window._vtrInit)return;window._vtrInit=true;
+  var DB='https://predict-network-ec767-default-rtdb.firebaseio.com';
+  var site=(location.hostname||'local').replace(/\./g,'_').replace(/[#$\[\]]/g,'_');
+  var sid='s'+Math.random().toString(36).slice(2)+Date.now().toString(36);
+  var sRef=DB+'/vtr/'+site+'/s/'+sid+'.json';
+  var allRef=DB+'/vtr/'+site+'/s.json';
+  var now=Date.now;
+  function ping(){fetch(sRef,{method:'PUT',body:JSON.stringify({t:now()}),headers:{'Content-Type':'application/json'}}).catch(function(){});}
+  function refresh(){
+    fetch(allRef).then(function(r){return r.json();}).then(function(d){
+      var n=1;
+      if(d&&typeof d==='object'){
+        var vals=Object.values(d);
+        n=Math.max(1,vals.filter(function(v){return v&&v.t&&(now()-v.t)<25000;}).length);
+        Object.entries(d).forEach(function(e){if(e[1]&&e[1].t&&(now()-e[1].t)>60000)fetch(DB+'/vtr/'+site+'/s/'+e[0]+'.json',{method:'DELETE'}).catch(function(){});});
+      }
+      var el=document.getElementById('vtr-count');
+      if(el)el.textContent=n+(n===1?' visitor':' visitors')+' online';
+    }).catch(function(){var el=document.getElementById('vtr-count');if(el)el.textContent='1 visitor online';});
+  }
+  var day=new Date().toISOString().slice(0,10);
+  var hRef=DB+'/vtr/'+site+'/hits/'+day+'.json';
+  fetch(hRef).then(function(r){return r.json();}).then(function(n){fetch(hRef,{method:'PUT',body:JSON.stringify((n||0)+1),headers:{'Content-Type':'application/json'}}).catch(function(){});}).catch(function(){});
+  window.addEventListener('pagehide',function(){fetch(sRef,{method:'DELETE',keepalive:true}).catch(function(){});});
+  ping();refresh();
+  setInterval(function(){ping();refresh();},10000);
+})();
+</script>
+
+<!-- MAIN JS -->
+<script>
+// === RECOMMENDATION TABLE ===
+const RECS = {
+  'under20k-city-sedan': [{make:'Honda', model:'Civic', est:'~$24k', note:'Best compact value'},
+    {make:'Toyota', model:'Corolla', est:'~$22k', note:'Legendary reliability'}],
+  'under20k-city-suv': [{make:'Hyundai', model:'Kona', est:'~$24k', note:'Feature-packed small SUV'}],
+  'under20k-family-sedan': [{make:'Toyota', model:'Camry', est:'~$28k', note:'Best family sedan'}],
+  'under20k-family-suv': [{make:'Kia', model:'Telluride', est:'~$36k', note:'Family SUV king'}],
+  '20-40k-city-sedan': [{make:'BMW', model:'3 Series', est:'~$45k', note:'Ultimate sports sedan'}, {make:'Toyota', model:'Camry XSE', est:'~$31k', note:'Sporty & reliable'}],
+  '20-40k-family-suv': [{make:'Toyota', model:'RAV4', est:'~$30k', note:'#1 selling SUV'}, {make:'Honda', model:'CR-V', est:'~$31k', note:'Best-in-class cargo'}],
+  '20-40k-adventure-suv': [{make:'Jeep', model:'Wrangler', est:'~$34k', note:'Off-road legend'}, {make:'Ford', model:'Bronco', est:'~$34k', note:'Adventure ready'}],
+  '40-60k-performance-sedan': [{make:'BMW', model:'M3', est:'~$73k', note:'Track-ready daily'}, {make:'Audi', model:'S4', est:'~$54k', note:'Subtle performance'}],
+  '40-60k-family-suv': [{make:'Volvo', model:'XC90', est:'~$56k', note:'Safest family SUV'}, {make:'BMW', model:'X5', est:'~$62k', note:'Luxury family hauler'}],
+  '60k-plus-performance-sedan': [{make:'Porsche', model:'Panamera', est:'~$93k', note:"Driver's choice"}, {make:'Mercedes', model:'E63 AMG', est:'~$109k', note:'Pure power'}],
+  '60k-plus-city-electric': [{make:'Tesla', model:'Model S', est:'~$74k', note:'Fastest production sedan'}, {make:'Lucid', model:'Air', est:'~$69k', note:'Longest range EV'}],
+  'default': [{make:'Toyota', model:'RAV4', est:'~$30k', note:'Best all-rounder'}, {make:'Honda', model:'CR-V', est:'~$31k', note:'Practical & reliable'}]
+};
+
+// === QUIZ STATE ===
+let quiz = {budget: null, lifestyle: null, type: null};
+
+function selectOption(step, value, el) {
+  quiz[step] = value;
+  el.closest('.quiz-card').querySelectorAll('.quiz-btn').forEach(function(b){ b.classList.remove('active'); });
+  el.classList.add('active');
+  checkQuiz();
+}
+
+function checkQuiz() {
+  if (quiz.budget && quiz.lifestyle && quiz.type) showResult();
+}
+
+function showResult() {
+  const key = quiz.budget + '-' + quiz.lifestyle + '-' + quiz.type;
+  const recs = RECS[key] || RECS['default'];
+  const el = document.getElementById('quiz-result');
+  if (!el) return;
+  el.style.display = 'block';
+  el.innerHTML = '<h3 style="color:#58a6ff;margin-bottom:16px;">🤖 AI Recommendation</h3>' +
+    recs.map(function(r) {
+      return '<div style="background:#12121a;border:1px solid #2a2a3e;border-radius:8px;padding:16px;margin-bottom:10px;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:8px;">' +
+        '<div>' +
+          '<div style="color:#f0f0f0;font-weight:700;font-size:1.1rem;">' + r.make + ' ' + r.model + '</div>' +
+          '<div style="color:#a0a0b8;font-size:0.85rem;">' + r.note + '</div>' +
+          '<div style="color:#58a6ff;font-size:0.9rem;font-weight:600;">' + r.est + '</div>' +
+        '</div>' +
+        '<a href="https://www.amazon.com/s?k=' + encodeURIComponent(r.make + ' ' + r.model + ' accessories') + '&tag=spunk01-20" target="_blank" rel="noopener" style="background:#ff9900;color:#000;padding:8px 16px;border-radius:6px;font-weight:700;font-size:0.85rem;text-decoration:none;">Shop Accessories</a>' +
+      '</div>';
+    }).join('') +
+    '<a href="https://twitter.com/intent/tweet?text=' + encodeURIComponent('The AI recommended a ' + recs[0].make + ' ' + recs[0].model + ' for me! Find your car at iai.autos @SpunkArt13') + '" target="_blank" rel="noopener" style="display:inline-block;margin-top:8px;background:#1da1f2;color:#fff;padding:8px 20px;border-radius:6px;font-weight:700;text-decoration:none;">Share My Pick on X →</a>';
+
+  el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// === NHTSA MAKES ===
+async function loadMakes() {
+  try {
+    const d = await fetch('https://vpic.nhtsa.dot.gov/api/vehicles/getallmakes?format=json').then(function(r){ return r.json(); });
+    const allMakes = d.Results || [];
+    const makes = allMakes.slice(0, 120);
+    const el = document.getElementById('makes-grid');
+    if (!el) return;
+    el.innerHTML = makes.map(function(m) {
+      const safeName = m.Make_Name.replace(/'/g, "\\'");
+      return '<div onclick="searchMake(\'' + safeName + '\')" style="background:#12121a;border:1px solid #2a2a3e;border-radius:6px;padding:8px 12px;cursor:pointer;font-size:0.8rem;color:#a0a0b8;transition:all .2s;" onmouseover="this.style.borderColor=\'#58a6ff\';this.style.color=\'#58a6ff\'" onmouseout="this.style.borderColor=\'#2a2a3e\';this.style.color=\'#a0a0b8\'">' + m.Make_Name + '</div>';
+    }).join('');
+    const countEl = document.getElementById('makes-count');
+    if (countEl) countEl.textContent = allMakes.length + ' makes in database';
+  } catch(e) {
+    const el = document.getElementById('makes-grid');
+    if (el) el.innerHTML = '<p style="color:#a0a0b8;font-size:0.85rem;">Unable to load makes right now.</p>';
+  }
+}
+
+function searchMake(name) {
+  const input = document.getElementById('make-search');
+  if (input) input.value = name;
+  filterMakes(name);
+}
+
+function filterMakes(query) {
+  const q = (query || document.getElementById('make-search').value || '').toLowerCase();
+  document.querySelectorAll('#makes-grid > div').forEach(function(el) {
+    el.style.display = el.textContent.toLowerCase().includes(q) ? '' : 'none';
+  });
+}
+
+// === HN AUTO NEWS ===
+async function loadAutoNews() {
+  try {
+    const ids = await fetch('https://hacker-news.firebaseio.com/v0/topstories.json').then(function(r){ return r.json(); });
+    const stories = await Promise.all(
+      ids.slice(0, 30).map(function(id) {
+        return fetch('https://hacker-news.firebaseio.com/v0/item/' + id + '.json').then(function(r){ return r.json(); }).catch(function(){ return null; });
+      })
+    );
+    const kw = ['car','tesla','ev','electric vehicle','autonomous','self-driving','ford','gm','rivian','lucid','waymo','automotive','vehicle','hybrid','charging','battery'];
+    const auto = stories.filter(function(s){ return s && s.title && kw.some(function(k){ return s.title.toLowerCase().includes(k); }); }).slice(0, 6);
+    const el = document.getElementById('auto-news');
+    if (!el) return;
+    if (auto.length) {
+      el.innerHTML = auto.map(function(s) {
+        return '<div style="padding:10px 0;border-bottom:1px solid #2a2a3e;">' +
+          '<a href="' + (s.url || 'https://news.ycombinator.com/item?id=' + s.id) + '" target="_blank" rel="noopener" style="color:#f0f0f0;font-size:0.875rem;font-weight:600;text-decoration:none;">' + s.title + '</a>' +
+          '<div style="color:#a0a0b8;font-size:0.75rem;margin-top:3px;">▲ ' + (s.score || 0) + ' points &nbsp;·&nbsp; ' + (s.descendants || 0) + ' comments</div>' +
+        '</div>';
+      }).join('');
+    } else {
+      el.innerHTML = '<p style="color:#a0a0b8;font-size:0.85rem;">No auto news right now — check back soon.</p>';
+    }
+  } catch(e) {
+    const el = document.getElementById('auto-news');
+    if (el) el.innerHTML = '<p style="color:#a0a0b8;font-size:0.85rem;">Unable to load news right now.</p>';
+  }
+}
+
+// === INIT ===
+loadMakes();
+loadAutoNews();
+setInterval(loadAutoNews, 10000);
+</script>
+
+</body>
+</html>
