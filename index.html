@@ -381,7 +381,7 @@
       class="makes-search"
       placeholder="Search makes... (e.g. Toyota, Ford, BMW)"
       oninput="filterMakes()"
-    />
+    / onkeydown="if(event.key==='Enter'){filterMakes()}">
     <div id="makes-grid">
       <p style="color:var(--muted);font-size:0.85rem;">Loading makes from NHTSA API...</p>
     </div>
